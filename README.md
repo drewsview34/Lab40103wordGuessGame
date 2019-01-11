@@ -10,10 +10,10 @@ Contributors: ???
 Actual Time to complete: ???
 
 * User must create a new project in Visual Studio. 
+* User must create a README.md by adding new file in Solution Explorer.
 * User must push project to Github.
-* User must create a README.md (after pushing project to Github.
-* User must create code that resembles ATM features. Those features are deposit, withdraw, view balance, and exit.
-* User must use exception handling by implementing try/catch/finally and a throw in the program.
+* User must create code that displays a Word Guess Game. Those features of the game is to be able to guess a random word for the user to guess. The game should be able to display any guessed letters and display correctly guess letters. Random words should be able to view, add, and delete from an external file..
+* User must use Methods for each of the following actions; Home navigation, View words in external file, Add a word in external file, Remove words from external file, Exit the game, and Start a new game.
 * User must use Unit Testing for every method.
 
 Purpose of the program to create a Word Guess Game. The main idea is to guess the mystery word by inputting one letter at a time. The game should be able to save the any input guesses and diplay the letters guessed correctly. Each new game should choose a new random word with the ability for the user to view, add, and delete mystery words.
