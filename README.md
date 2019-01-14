@@ -24,4 +24,4 @@ Here is a visual of what the program looks like.
 
 Successful Output
 
-![Lab40103]()
+![Lab40103](https://github.com/drewsview34/Lab40103wordGuessGame/blob/master/wordGuessGame.PNG)
