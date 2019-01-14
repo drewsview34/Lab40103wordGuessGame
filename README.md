@@ -4,10 +4,10 @@ Lab 40103 Word Guess Game
 
 Developer: Andrew Hinojosa
 
-Contributors: ???
+Contributors: Jason Few
 
 
-Actual Time to complete: ???
+Actual Time to complete: 11 Hours
 
 * User must create a new project in Visual Studio. 
 * User must create a README.md by adding new file in Solution Explorer.
@@ -24,4 +24,4 @@ Here is a visual of what the program looks like.
 
 Successful Output
 
-![Lab40103](???)
+![Lab40103]()
