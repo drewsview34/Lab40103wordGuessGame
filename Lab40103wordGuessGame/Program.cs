@@ -1,9 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 
 namespace Lab40103wordGuessGame
 {
-    class Program
+    public class Program
     { /// <summary>
       /// Calls the interface and creates file to interact with words in the game
       /// </summary>
@@ -12,7 +13,7 @@ namespace Lab40103wordGuessGame
         {
             string location = "../../../words.txt";
             Console.WriteLine("Hello World!");
-            Createfile(location);
+            CreateLocation(location);
             UserInterface(location);
         }
         /// <summary>
@@ -46,20 +47,20 @@ namespace Lab40103wordGuessGame
                             case 1:
                                 Console.WriteLine("Enter The Word You Want To Add");
                                 string userAdd = Console.ReadLine().ToLower();
-                                AddToFile(location, userAdd);
+                                AddToLocation(location, userAdd);
                                 Console.WriteLine("Word Added Successfully");
                                 Console.ReadLine();
                                 break;
                             case 2:
                                 Console.WriteLine("Enter The Word You Want To Delete");
                                 string userDelete = Console.ReadLine().ToLower();
-                                DeleteFromFile(location, userDelete);
+                                DeleteFromLocation(location, userDelete);
                                 break;
                             case 3:
-                                ViewAllWords(location);
+                                ViewWords(location);
                                 break;
                             case 4:
-                                Play(location);
+                                GuessGame(location);
                                 break;
                             default:
                                 Environment.Exit(0);
@@ -84,7 +85,7 @@ namespace Lab40103wordGuessGame
         /// </summary>
         /// <param name="location"></param>
         /// <returns>string</returns>
-        public static string CreateFile(string location)
+        public static string CreateLocation(string location)
         {
             try
             {
@@ -110,7 +111,188 @@ namespace Lab40103wordGuessGame
         /// Adds A Word To The Text File Entered By User
         /// </summary>
         /// <param name="location"></param>
-        /// <param name="userAdd">The Word Added By The User</param>
-        
-   }
-}
+        /// <param name="userChoose">The Word Added By The User</param>
+        public static string AddToLocation(string location, string userAdd)
+        {
+            try
+            {
+                using(StreamWriter streamWriter = File.AppendText(location))
+                {
+                    streamWriter.WriteLine(userAdd);
+                }
+            }
+            catch(Exception except)
+            {
+                throw except;
+            }
+            return userAdd;
+        }
+
+        /// <summary>
+        /// Adds A Word To The Text File Entered By User
+        /// </summary>
+        /// <param name="location"></param>
+        /// <param name="userChoose">The Word Added By The User</param>
+        public static string DeleteFromLocation(string location, string userDelete)
+        {
+            try
+            {
+                if (userDelete.Length > 0)
+                {
+                    string[] wordsInFile = File.ReadAllLines(location);
+
+                    foreach(string words in wordsInFile)
+                    {
+                        //Checks If The Word Deleted Equals Word In Location
+                        if(string.Equals(words, userDelete, StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            //The Location Will Delete The Word And Update Location
+                            string[] newLocationList = new string[wordsInFile.Length -1];
+                            int count = 0;
+
+                            for(int index = 0; index < newLocationList.Length; index++)
+                            {
+                                if(userDelete == wordsInFile[count])
+                                {
+                                    index--;
+                                    count++;
+                                }
+                                else
+                                {
+                                    newLocationList[index] = wordsInFile[count];
+                                    count++;
+                                }
+                            }
+                        //This Sends The Updated Words To The Location
+                        using (StreamWriter streamWriter = new StreamWriter(location))
+                        {
+                            for(int index = 0; index < newLocationList.Length; index++)
+                            {
+                                   streamWriter.WriteLine(newLocationList[index]);
+                            }
+                        }
+                            Console.WriteLine($"({userDelete} Word Deleted");
+                            Console.ReadLine();
+                        }
+                    }
+                    Console.WriteLine($"{userDelete} Does Not Exist");
+                }
+                else
+                {
+                    throw new Exception("Enter The Word You Want To Delete");
+                }
+            }
+            catch(Exception except)
+            {
+                Console.WriteLine(except.Message);
+            }
+            finally
+            {
+                Console.WriteLine("Try Again");
+            }
+            return userDelete;
+        }
+        /// <summary>
+        /// User Can View All Words
+        /// </summary>
+        /// <param name="location"></param>
+        public static string ViewWords(string location)
+        {
+            //Renders Words From Location To Console
+            string[] lines = File.ReadAllLines(location);
+
+            try
+            {
+                for(int index = 0; index < lines.Length; index++)
+                {
+                    Console.WriteLine(lines[index]);
+                }
+            }
+            catch (Exception except)
+            {
+                throw except;
+            }
+            Console.WriteLine(lines[0]);
+            return lines[0];
+        }
+        /// <summary>
+        /// Chooses A Random Word From Location
+        /// </summary>
+        /// <param name="location"></param>
+        public static string RandomWord(string location)
+        {
+            try
+            {
+                //Renders Random Word
+                string[] lines = File.ReadAllLines(location);
+                Random line = new Random();
+                int indexPos = line.Next(lines.Length);
+                return lines[indexPos];
+            }
+            catch (Exception except)
+            {
+                throw except;
+            }
+        }
+        /// <summary>
+        /// How the Game Is Played
+        /// </summary>
+        /// <param name="location"></param>
+        public static void GuessGame(string location)
+        {
+            try
+            {
+                //Getting A Random Word & Creating Variables To Use
+                string word = RandomWord(location);
+                string userGuess = " ";
+                string[] renderWord = new string[word.Length];
+
+                for(int index = 0; index < word.Length; index++)
+                {
+                    renderWord[index] = " _ ";
+                }
+                foreach (string l in renderWord)
+                {
+                    Console.Write(l);
+                }
+                Console.WriteLine();
+
+                bool userWins = false;
+
+                while (!userWins)
+                {
+                    //Logic To Determine If Guess Is Correct
+                    Console.WriteLine("Guess A Letter");
+                    string letter = Console.ReadLine();
+
+                    if (letter != null && (word.ToLower().Contains(letter.ToLower()) && !userGuess.Contains(letter)))
+                    {
+                        for (int index = 0; index < word.Length; index++)
+                        {
+                            if (word[index].ToString().ToLower() == letter)
+                            {
+                                renderWord[index] = letter;
+                                userGuess += letter;
+                            }
+                            else
+                            {
+                                Console.Write(renderWord[index]);
+                            }
+                        }
+                        Console.WriteLine($"Your Guess: {userGuess}");
+
+                        if(!renderWord.Contains(" _ "))
+                        {
+                            Console.WriteLine("Winner");
+                            userWins = true;
+                        }
+                    }
+                }
+            }
+            catch (Exception except)
+            {
+                throw except;
+            }           
+        }
+    }    
+}   
