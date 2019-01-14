@@ -213,7 +213,8 @@ namespace Lab40103wordGuessGame
                 throw except;
             }
             Console.WriteLine(lines[0]);
-            return lines[0];
+            int indexer = 0;
+            return lines[indexer];
         }
         /// <summary>
         /// Chooses A Random Word From Location
