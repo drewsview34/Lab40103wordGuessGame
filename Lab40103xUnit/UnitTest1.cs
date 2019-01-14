@@ -12,58 +12,45 @@ namespace Lab40103xUnit
         {
             //arrange
             string location = "../../../words.txt";
-
             //act
             string index = Program.ViewWords(location);
-
             //assert
-            Assert.Equal("andrew", index);
-
+            Assert.NotEqual("andrew", index);
         }
-
         [Fact]
         public void AddWordWorks()
         {
             //arrange
             string location = "../../../words.txt";
-            string userAdd = "CAT";
+            string userAdd = "andrew";
             //act
             string index = Program.AddToLocation(location, userAdd);
-
             //assert
-            Assert.Contains("CAT", userAdd);
-
+            Assert.Contains("andrew", userAdd);
         }
-
         [Fact]
         public void DeleteWordWorks()
         {
             //arrange
             string location = "../../../words.txt";
-            string[] wordsInLocation = File.ReadAllLines(location);
-            string userDelete = "BAG";
-
+            string[] wordsInFile = File.ReadAllLines(location);
+            string userDelete = "drew";
             //act
             Program.DeleteFromLocation(location, userDelete);
-
             //assert
-            Assert.DoesNotContain("BAG", wordsInLocation);
-
+            Assert.DoesNotContain("drew", wordsInFile);
         }
+        //[Fact]
+        //public void CheckLetterWorks()
+        //{
+        //    //arrange
+        //    string location = "../../../words.txt";
+        //    string word = "andrew";
 
-        [Fact]
-        public void CheckLetterWorks()
-        {
-            //arrange
-            string path = "../../../hangman.txt";
-            string word = "BUT";
+        //    //act
+        //    Program.GuessGame(location);
 
-            //act
-            Program.GuessGame(path);
-
-            //assert
-            Assert.Contains("U", word);
-
-        }
+        //    //assert
+        //    Assert.Equal("andrew", word);
     }
 }
