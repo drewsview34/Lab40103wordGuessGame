@@ -79,6 +79,38 @@ namespace Lab40103wordGuessGame
                 }       
             }
         }
-    public static string CreateFile(string location)
-    }
+        /// <summary>
+        /// Creates A Text File For Words To Be Saved
+        /// </summary>
+        /// <param name="location"></param>
+        /// <returns>string</returns>
+        public static string CreateFile(string location)
+        {
+            try
+            {
+                if(File.Exists(location))
+                {
+                    return "Words Exist";
+                }
+                else
+                {
+                    using (StreamWriter streamWriter = new StreamWriter(location))
+                    {
+                        streamWriter.WriteLine("andrew");
+                    }
+                    return " ";
+                }
+            }
+            catch(Exception except)
+            {
+                throw except;
+            }
+        }
+        /// <summary>
+        /// Adds A Word To The Text File Entered By User
+        /// </summary>
+        /// <param name="location"></param>
+        /// <param name="userAdd">The Word Added By The User</param>
+        
+   }
 }
